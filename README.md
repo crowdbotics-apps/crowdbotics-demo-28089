@@ -6,6 +6,7 @@ This is a repository for a web application developed with Django, built with [Cr
 
 * This project only includes basic subscription system. Renewing subscription and payments can be completed with daily cron using Celery Beat
 * As login, register and forgot password modules are already completed on initial project, I haven't done any progress or wrote test for it
+* Please proceed to [Demo API Docs](https://crowdbotics-demo-28089.botics.co/api-docs/) to start, Home page isn't available for project 
 * Tests are ready for project, Please check [Tests](#test)
 
 # Development
