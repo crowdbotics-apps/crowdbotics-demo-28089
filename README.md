@@ -1,15 +1,12 @@
-# crowdbotics_demo_28089
+# Subscription Demo
 
 This is a repository for a web application developed with Django, built with [Crowdbotics](https://crowdbotics.com)
 
-### Features
+# Demo Description
 
-1. **Local Authentication** using email and password with [allauth](https://pypi.org/project/django-allauth/)
-2. **Rest API** using [django rest framework](http://www.django-rest-framework.org/)
-3. **Forgot Password**
-4. Bootstrap4
-5. Toast Notification
-6. Inline content editor in homepage
+* This project only includes basic subscription system. Renewing subscription and payments can be completed with daily cron using Celery Beat
+* As login, register and forgot password modules are already completed on initial project, I haven't done any progress or wrote test for it
+* Tests are ready for project, Please check [Tests](#test)
 
 # Development
 
@@ -79,3 +76,10 @@ This project is set up to run using [Docker Compose](https://docs.docker.com/com
 2. Run `python manage.py makemigrations`
 3. Run `python manage.py migrate`
 4. Run `python manage.py runserver`
+
+## Test
+
+1. Run `pipenv shell`
+2. Run `python manage.py test`
+
+* You can also check home/tests/ directory for test files

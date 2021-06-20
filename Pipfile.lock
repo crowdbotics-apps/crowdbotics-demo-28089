@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "025d34f1591598b62adf103db163d51c195f7431bc6339b99bc9ede525a6beb0"
+            "sha256": "1c7fed5ccd09c33952a1f58a2b121a0d613b090cccd3d670a3896be878f6bc86"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -346,6 +346,14 @@
             ],
             "markers": "python_version >= '3.6'",
             "version": "==2.0.1"
+        },
+        "model-bakery": {
+            "hashes": [
+                "sha256:7e06071c7ba5c58f9c1d7245b4b80cc5240806f30c4561f5c04a652d67626725",
+                "sha256:bebde0d4f895f55a8cf26706275a238fecdf0fddd227214675b7351598c99ce5"
+            ],
+            "index": "pypi",
+            "version": "==1.3.2"
         },
         "oauthlib": {
             "hashes": [

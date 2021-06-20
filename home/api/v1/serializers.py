@@ -9,6 +9,7 @@ from allauth.account.utils import setup_user_email
 from rest_framework import serializers
 from rest_auth.serializers import PasswordResetSerializer
 
+from home.models import Plan, App, Subscription
 
 User = get_user_model()
 
@@ -32,7 +33,8 @@ class SignupSerializer(serializers.ModelSerializer):
 
     def _get_request(self):
         request = self.context.get('request')
-        if request and not isinstance(request, HttpRequest) and hasattr(request, '_request'):
+        if request and not isinstance(request, HttpRequest) and hasattr(request,
+                                                                        '_request'):
             request = request._request
         return request
 
@@ -74,3 +76,59 @@ class UserSerializer(serializers.ModelSerializer):
 class PasswordSerializer(PasswordResetSerializer):
     """Custom serializer for rest_auth to solve reset password error"""
     password_reset_form_class = ResetPasswordForm
+
+
+class BaseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = None
+        exclude = ('is_active',)
+        extra_kwargs = {
+            'created_at': {
+                'read_only': True,
+            },
+            'updated_at': {
+                'read_only': True,
+            }
+        }
+
+
+class PlanSerializer(BaseSerializer):
+    class Meta(BaseSerializer.Meta):
+        model = Plan
+
+
+class AppSerializer(serializers.ModelSerializer):
+    class Meta(BaseSerializer.Meta):
+        model = App
+        exclude = BaseSerializer.Meta.exclude + ('user',)
+
+    def save(self, **kwargs):
+        self.validated_data['user_id'] = self.context.get('request').user.id
+        return super(AppSerializer, self).save(**kwargs)
+
+
+class SubscriptionSerializer(serializers.ModelSerializer):
+    default_error_messages = {
+        'already_subscribed': _('You already have subscription'),
+        'already_subscribed_upgrade': _('You already have subscription, '
+                                        'you can upgrade your subscription'),
+
+    }
+
+    class Meta(BaseSerializer.Meta):
+        model = Subscription
+
+    def validate(self, attrs):
+        request = self.context.get('request')
+        user = request.user
+        current_sub = Subscription.objects.select_related('plan').filter(
+            app__user=user).actives().first()
+        if current_sub:
+            # TODO: get rid of magic string
+            if current_sub.plan.name != 'Pro':
+                raise serializers.ValidationError(
+                    self.error_messages['already_subscribed_upgrade'])
+            raise serializers.ValidationError(
+                self.error_messages['already_subscribed'])
+
+        return attrs
