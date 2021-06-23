@@ -25,6 +25,7 @@ from home.schemas import CustomOpenAPISchemaGenerator
 
 urlpatterns = [
     path("api/v1/", include("home.api.v1.urls")),
+    path("accounts/", include("allauth.urls")),
     path("admin/", admin.site.urls),
     path("users/", include("users.urls", namespace="users")),
     path("rest-auth/", include("rest_auth.urls")),
