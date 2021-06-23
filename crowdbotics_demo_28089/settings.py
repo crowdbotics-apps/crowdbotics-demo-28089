@@ -155,7 +155,9 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated'],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication'],
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
     'PAGE_SIZE': 25,
     'NON_FIELD_ERRORS_KEY': "detail",
     'EXCEPTION_HANDLER': 'home.utils.custom_exception_handler'

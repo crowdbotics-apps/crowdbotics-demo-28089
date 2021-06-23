@@ -1,3 +1,5 @@
+from drf_yasg.utils import swagger_auto_schema
+from rest_framework import permissions
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.viewsets import ModelViewSet, ViewSet
 from rest_framework.authtoken.models import Token
@@ -11,14 +13,16 @@ from home.api.v1.serializers import (
 
 class SignupViewSet(ModelViewSet):
     serializer_class = SignupSerializer
+    permission_classes = (permissions.AllowAny,)
     http_method_names = ["post"]
 
 
 class LoginViewSet(ViewSet):
     """Based on rest_framework.authtoken.views.ObtainAuthToken"""
-
+    permission_classes = (permissions.AllowAny,)
     serializer_class = AuthTokenSerializer
 
+    @swagger_auto_schema(request_body=AuthTokenSerializer)
     def create(self, request):
         serializer = self.serializer_class(
             data=request.data, context={"request": request}
